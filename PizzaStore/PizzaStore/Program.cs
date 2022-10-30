@@ -1,3 +1,5 @@
+using PizzaStore.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,12 +21,11 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/", () => "Hello World!")
-.WithName("GetRoot");
+//Ajout des routes pour l'API
+app.MapGet("/api/pizzas", PizzaRepos.GetAll);
+app.MapGet("/api/pizzas/{id}", PizzaRepos.GetById);
+app.MapPost("/api/pizzas", PizzaRepos.Add);
+app.MapPut("/api/pizzas/{id}", PizzaRepos.Update);
+app.MapDelete("/api/pizzas/{id}", PizzaRepos.Delete);
 
 app.Run();
